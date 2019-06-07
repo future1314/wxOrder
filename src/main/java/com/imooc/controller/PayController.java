@@ -42,7 +42,7 @@ public class PayController {
         PayResponse payResponse = payService.create(orderDTO);
 
         map.put("payResponse", payResponse);
-        map.put("returnUrl", returnUrl);
+        map.put("returnUrl", returnUrl);//用户创建订单，商户存储订单状态，发起预支付。微信返回预支付信息，吊起用户支付，支付后，微信异步通知。
 
         return new ModelAndView("pay/create", map);
     }

@@ -43,7 +43,14 @@ public class PayServiceImpl implements PayService {
         payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
         log.info("【微信支付】发起支付, request={}", JsonUtil.toJson(payRequest));
 
-        PayResponse payResponse = bestPayService.pay(payRequest);
+        PayResponse payResponse =null;
+        try{
+            payResponse = bestPayService.pay(payRequest);
+        }catch(Exception e){
+            e.printStackTrace();
+            log.info("下单异常={}",e.getMessage());
+        }
+
         log.info("【微信支付】发起支付, response={}", JsonUtil.toJson(payResponse));
         return payResponse;
     }
@@ -93,8 +100,13 @@ public class PayServiceImpl implements PayService {
         refundRequest.setOrderAmount(orderDTO.getOrderAmount().doubleValue());
         refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
         log.info("【微信退款】request={}", JsonUtil.toJson(refundRequest));
-
-        RefundResponse refundResponse = bestPayService.refund(refundRequest);
+        RefundResponse refundResponse = null;
+        try {
+            refundResponse = bestPayService.refund(refundRequest);
+        }catch(Exception e){
+            log.info("退款异常={}",e.getMessage());
+            e.printStackTrace();
+        }
         log.info("【微信退款】response={}", JsonUtil.toJson(refundResponse));
 
         return refundResponse;

@@ -49,7 +49,7 @@ public class SellerUserController {
         SellerInfo sellerInfo = sellerService.findSellerInfoByOpenid(openid);
         if (sellerInfo == null) {
             map.put("msg", ResultEnum.LOGIN_FAIL.getMessage());
-            map.put("url", "/sell/seller/order/list");
+            map.put("url", "/sell/seller/order/list");//手机也可以重定向了
             return new ModelAndView("common/error");
         }
 
@@ -84,4 +84,5 @@ public class SellerUserController {
         map.put("url", "/sell/seller/order/list");
         return new ModelAndView("common/success", map);
     }
+
 }
