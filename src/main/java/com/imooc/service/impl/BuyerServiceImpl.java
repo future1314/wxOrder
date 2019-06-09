@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 廖师兄
  * 2017-06-22 00:13
@@ -47,5 +50,20 @@ public class BuyerServiceImpl implements BuyerService {
             throw new SellException(ResultEnum.ORDER_OWNER_ERROR);
         }
         return orderDTO;
+    }
+
+    ///ddl
+    @Override
+    public List<OrderDTO> findOrderList(String openid, Integer status) {
+        List<OrderDTO> list = new ArrayList<>();
+        list.clear();
+
+        List<OrderDTO> listStats = orderService.findListStats(openid, status);
+        listStats.forEach((orderDTO) -> {
+            String orderId = orderDTO.getOrderId();
+            OrderDTO one = orderService.findOne(orderId);
+            list.add(one);
+        });
+        return list;
     }
 }

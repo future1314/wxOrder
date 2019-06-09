@@ -26,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -138,6 +139,36 @@ public class OrderServiceImpl implements OrderService {
         return new PageImpl<OrderDTO>(orderDTOList, pageable, orderMasterPage.getTotalElements());
     }
 
+    //查询不同订单状态列表
+    @Override
+    public List<OrderDTO> findListStats(String buyerOpenid, Integer orderStatus) {
+        List<OrderMaster> orderMasters = orderMasterRepository.findByBuyerOpenidAndOrderStatus(buyerOpenid, orderStatus);
+        return OrderMaster2OrderDTOConverter.convert(orderMasters);
+    }
+
+/*
+    @Override
+    public OrderDTO findOne(String orderId) {
+
+        OrderMaster orderMaster = orderMasterRepository.findOne(orderId);
+        if (orderMaster == null) {
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
+        if (CollectionUtils.isEmpty(orderDetailList)) {
+            throw new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
+        }
+
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster, orderDTO);
+        orderDTO.setOrderDetailList(orderDetailList);
+        orderDTO.setOrderStatusStr(orderDTO.getOrderStatusStr(orderDTO.getOrderStatus()));
+
+
+        return orderDTO;
+    }
+*/
     @Override
     @Transactional
     public OrderDTO cancel(OrderDTO orderDTO) {

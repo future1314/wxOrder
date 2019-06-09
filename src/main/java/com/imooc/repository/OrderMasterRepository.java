@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Created by 廖师兄
  * 2017-06-11 17:24
@@ -12,4 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface OrderMasterRepository extends JpaRepository<OrderMaster, String> {
 
     Page<OrderMaster> findByBuyerOpenid(String buyerOpenid, Pageable pageable);
+
+    List<OrderMaster> findByBuyerOpenidAndOrderStatus(String buyerOpenid, Integer orderStatus);
 }

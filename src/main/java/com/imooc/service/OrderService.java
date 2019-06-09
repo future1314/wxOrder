@@ -4,6 +4,8 @@ import com.imooc.dto.OrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by 廖师兄
  * 2017-06-11 18:23
@@ -30,5 +32,8 @@ public interface OrderService {
 
     /** 查询订单列表. */
     Page<OrderDTO> findList(Pageable pageable);
+
+    ///ddl
+    List<OrderDTO> findListStats(String buyerOpenid, Integer orderStatus);
 
 }

@@ -25,7 +25,7 @@ public class PushMessageServiceImplTest {
     @Test
     public void orderStatus() throws Exception {
 
-        OrderDTO orderDTO = orderService.findOne("1499097346204378750");
+        OrderDTO orderDTO = orderService.findOne("1559873230785225697");
         pushMessageService.orderStatus(orderDTO);
     }
 

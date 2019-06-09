@@ -40,13 +40,14 @@ public class WechatController {
         //2. 调用方法
         String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));
-        return "redirect:" + redirectUrl;
+        return "redirect:" + redirectUrl;//state传什么都会回传的
     }//哪里调用的呢？？
 
     @GetMapping("/userInfo")//拿到用户openId
     public String userInfo(@RequestParam("code") String code,
                          @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+        log.info("code={}", code);
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
         } catch (WxErrorException e) {
@@ -55,7 +56,7 @@ public class WechatController {
         }
 
         String openId = wxMpOAuth2AccessToken.getOpenId();
-
+        log.info("openId={}", openId);
         return "redirect:" + returnUrl + "?openid=" + openId;
     }
 

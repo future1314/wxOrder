@@ -39,7 +39,7 @@ public class BuyerOrderController {
     private BuyerService buyerService;
 
     //创建订单
-    @PostMapping("/create")
+    @PostMapping("/create")//openId 怎么传入
     public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
                                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -63,7 +63,7 @@ public class BuyerOrderController {
     }
 
     //订单列表
-    @GetMapping("/list")
+    @GetMapping(value = {"/list"})
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
                                          @RequestParam(value = "size", defaultValue = "10") Integer size) {
@@ -71,11 +71,24 @@ public class BuyerOrderController {
             log.error("【查询订单列表】openid为空");
             throw new SellException(ResultEnum.PARAM_ERROR);
         }
-
+        //orderStatus
         PageRequest request = new PageRequest(page, size);
         Page<OrderDTO> orderDTOPage = orderService.findList(openid, request);
 
         return ResultVOUtil.success(orderDTOPage.getContent());
+    }
+
+    //ddl 订单列表
+    @GetMapping("/listByStatus")
+    public ResultVO<List<OrderDTO>> listByStatus(@RequestParam("openid") String openid,
+                                                 @RequestParam(value = "orderStatus", defaultValue = "0") Integer orderStatus) {
+        log.error("【查询订单列表】openid={}",openid);
+        if (StringUtils.isEmpty(openid)) {
+            throw new SellException(ResultEnum.PARAM_ERROR);
+        }
+
+        List<OrderDTO> orderList = buyerService.findOrderList(openid, orderStatus);
+        return ResultVOUtil.success(orderList);
     }
 
 
