@@ -45,10 +45,10 @@ public class PayController {
         //2. 发起支付
         PayResponse payResponse = payService.create(orderDTO);
 
-        map.put("payResponse", payResponse);
-        map.put("returnUrl", returnUrl);//用户创建订单，商户存储订单状态，发起预支付。微信返回预支付信息，吊起用户支付，支付后，微信异步通知。
-        log.info("response={}",JSONObject.toJSONString(map));
-        return JSONObject.toJSONString(map);
+        //map.put("payResponse", payResponse);
+        //map.put("returnUrl", returnUrl);//用户创建订单，商户存储订单状态，发起预支付。微信返回预支付信息，吊起用户支付，支付后，微信异步通知。
+        log.info("response={}",JSONObject.toJSONString(payResponse));
+        return JSONObject.toJSONString(payResponse);
     }
 
     @GetMapping("/create2")

@@ -43,8 +43,25 @@ public class WechatController {
         return "redirect:" + redirectUrl;//state传什么都会回传的
     }//哪里调用的呢？？
 
-    @GetMapping("/userInfo")//拿到用户openId
+    @GetMapping("/xcx/userInfo")//拿到用户openId
     public String userInfo(@RequestParam("code") String code,
+                         @RequestParam("state") String returnUrl) {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+        log.info("code={}", code);
+        try {
+            wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            log.error("【微信网页授权】{}", e);
+            throw new SellException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+        }
+
+        String openId = wxMpOAuth2AccessToken.getOpenId();
+        log.info("openId={}", openId);
+        return "openid=" + openId;
+    }
+
+    @GetMapping("/userInfo2")//拿到用户openId
+    public String userInfo2(@RequestParam("code") String code,
                          @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         log.info("code={}", code);
