@@ -25,9 +25,11 @@ public class Comment {
     @Id
     @GeneratedValue
     private int commentId;
+    private String orderId;
     private String openid;
     private String name;
-    private String avatarUrl;//头像
+    //头像地址
+    private String avatarUrl;
     private String content;
     private Date createTime;
 
