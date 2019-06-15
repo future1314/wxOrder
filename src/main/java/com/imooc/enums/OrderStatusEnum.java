@@ -13,6 +13,7 @@ public enum OrderStatusEnum implements CodeEnum {
     CANCEL(2, "已取消"),
     FINISHED(3, "完结"),
     COMMENT(4, "已评价"),
+    SERVICING(5, "您的订单已开始服务"),
     ;
 
     private Integer code;

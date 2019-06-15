@@ -5,6 +5,7 @@ import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.service.OrderService;
 import com.imooc.service.PayService;
+import com.imooc.service.PushMessageService;
 import com.imooc.utils.JsonUtil;
 import com.imooc.utils.MathUtil;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
@@ -25,13 +26,16 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PayServiceImpl implements PayService {
 
-    private static final String ORDER_NAME = "微信点餐订单";
+    private static final String ORDER_NAME = "企服订单";
 
     @Autowired
     private BestPayServiceImpl bestPayService;
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
 
     @Override
     public PayResponse create(OrderDTO orderDTO) {
@@ -87,7 +91,7 @@ public class PayServiceImpl implements PayService {
 
         //修改订单的支付状态
         orderService.paid(orderDTO);
-
+        //pushMessageService.orderStatus(orderDTO);  //小程序没办法用消息模版 "errcode":48001,"errmsg":"api unauthorized hint: [JTz8tA0155szc5!]
         return payResponse;
     }
 

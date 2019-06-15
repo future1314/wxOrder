@@ -14,4 +14,6 @@ public interface PushMessageService {
      * @param orderDTO
      */
     void orderStatus(OrderDTO orderDTO);
+
+    void orderStatus2(OrderDTO orderDTO);
 }
