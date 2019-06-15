@@ -50,6 +50,7 @@ public class PayServiceImpl implements PayService {
         }catch(Exception e){
             e.printStackTrace();
             log.info("下单异常={}",e.getMessage());
+            throw new RuntimeException("下单异常");
         }
 
         log.info("【微信支付】发起支付, response={}", JsonUtil.toJson(payResponse));

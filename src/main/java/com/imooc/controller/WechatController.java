@@ -43,7 +43,7 @@ public class WechatController {
         return "redirect:" + redirectUrl;//state传什么都会回传的
     }//哪里调用的呢？？
 
-    @GetMapping("/xcx/userInfo")//拿到用户openId
+    @GetMapping("/userInfo")//拿到用户openId
     public String userInfo(@RequestParam("code") String code,
                          @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();

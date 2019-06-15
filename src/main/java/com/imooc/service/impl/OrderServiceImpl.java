@@ -27,6 +27,8 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -143,7 +145,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> findListStats(String buyerOpenid, Integer orderStatus) {
         List<OrderMaster> orderMasters = orderMasterRepository.findByBuyerOpenidAndOrderStatus(buyerOpenid, orderStatus);
-        return OrderMaster2OrderDTOConverter.convert(orderMasters);
+        List<OrderDTO> result = OrderMaster2OrderDTOConverter.convert(orderMasters);
+        Collections.sort(result, Comparator.comparing(OrderDTO::getCreateTime).reversed());
+  //    return OrderMaster2OrderDTOConverter.convert(orderMasters);
+        return result;
     }
 
 /*
